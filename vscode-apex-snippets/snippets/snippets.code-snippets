@@ -3,59 +3,37 @@
         "prefix": "continue",
         "body": "if(${1:expression}) continue;",
         "description": "Continue statement"
-    },
-
-    "doWhile": {
-        "prefix": "doWhile",
-        "body": "do {\n} while ();",
-        "description": "Do-while loop"
-    },
-
-    "else": {
-        "prefix": "else",
-        "body": "else {\n}",
-        "description": "Else statement"
-    },
+    },    
 
     "elseif": {
         "prefix": "elseif",
-        "body": "elseif(${1:expression}) {\n}",
-        "description": "Elseif statement"
+        "body": [
+            "elseif(${1:expression}) {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Else if statement"        
     },
 
     "finally": {
         "prefix": "finally",
-        "body": "finally {\n}",
+        "body": [
+            "finally {",
+            "\t$0",
+            "}"
+        ], 
         "description": "Finally statement"
-    },
-
-    "for": {
-        "prefix": "for",
-        "body": "for (${1:type} ${2:element} : ${3:collection}) {\n}", 
-        "description": "Iterate over all elements in a list or set"
-    },
-
-    "if": {
-        "prefix": "if",
-        "body": "if(${1:expression}) {\n}",
-        "description": "If statement"
-    },
-    
-    "increment": {
-        "prefix": "increment",
-        "body": "for (Integer i=0; i < ${1:size}; i++) {\n}",
-        "description": "Traditional for loop"
     },
 
     "list": {
         "prefix": "list",
-        "body": "List<${1:type}> ${2:listName} = new List<${1:type}>();",
+        "body": "List<${1:Object}> ${2:listName} = new List<${1:Object}>();",
         "description": "Instantiates a new list"
     },
 
     "listToSet": {
         "prefix": "listToSet",
-        "body": "List<${1:type}> ${2:listName} = new List<${1:type}>(${3:setName});",
+        "body": "List<${1:Object}> ${2:listName} = new List<${1:Object}>(${3:setName});",
         "description": "Converts a list to set"
     },
 
@@ -68,11 +46,11 @@
     "mapOfList": {
         "prefix": "mapOfList",
         "body":[
-            "for (${1:type} ${2:element} : ${3:collection}) {",
+            "for (${1:Object} ${2:element} : ${3:collection}) {",
             "\tif (${4:mapName}.containskey(${2:element}.${5:key})){",
             "\t\t${4:mapName}.put(${2:element}.${5:key}, mapName.get(${2:element}.${5:key}).add(${2:element}));",
             "\t} else {",
-            "\t\t${4:mapName}.put(${2:element}.${5:key}, new List<${1:type}>{${2:element}});",
+            "\t\t${4:mapName}.put(${2:element}.${5:key}, new List<${1:Object}>{${2:element}});",
             "\t}",
             "}"
         ],
@@ -87,67 +65,69 @@
 
     "set": {
         "prefix": "set",
-        "body": "Set<${1:type}> ${2:setName} = new Set<${1:type}>();",
+        "body": "Set<${1:Object}> ${2:setName} = new Set<${1:Object}>();",
         "description": "Instantiates a new Set"
     },
 
     "setToList": {
         "prefix": "setToList",
-        "body": "Set<${1:type}> ${2:setName} = new Set<${1:type}>(${3:listName});",
+        "body": "Set<${1:Object}> ${2:setName} = new Set<${1:Object}>(${3:listName});",
         "description": "Converts a set to list"
     },
 
     "soql": {
         "prefix": "soql",
-        "body": "[SELECT Id FROM ${1:type}];",
+        "body": "[SELECT Id FROM ${1:Object}];",
         "description": "Basic SOQL query"
     },
 
     "soqlList": {
         "prefix": "soqllist",
-        "body": "List<${1:type}> ${2:listName} = [\n\tSELECT Id\n\tFROM ${3:type}\n\tWHERE ${4:filter}\n];",
-        "description": "Instantiates a new list based on a SOQL query"
+        "body": [
+            "List<${1:Object}> ${2:listName} = [",
+            "\tSELECT Id",
+            "\tFROM ${3:Object}",
+            "\tWHERE ${4:filter}",
+            "];"
+        ],
+        "description": "New list based on SOQL"
     },
 
     "soqlMap": {
         "prefix": "soqlMap",
-        "body": "Map<Id, ${1:type}> ${2:mapName} = new Map<Id, ${1:type}>([\n\tSELECT Id\n\tFROM ${1:type}\n\tWHERE ${3:filter}\n]);",
-        "description": "Instantiates a new map based on a SOQL query"
-    },
-
-    "switch": {
-        "prefix": "switch",
-        "body": "switch on ${1:expression}\n\twhen ${2:value}\n\twhen else {\n}",
-        "description": "Switch statement"
+        "body": [
+            "Map<Id, ${1:Object}> ${2:mapName} = new Map<Id, ${1:Object}>([",
+            "\tSELECT Id",
+            "\tFROM ${1:Object}",
+            "\tWHERE ${3:filter}",
+            "]);"
+        ],
+        "description": "New map based on SOQL"
     },
 
     "ternary":{
         "prefix": "ternary",
-        "body": "${1:type} ${2:variable} = (${3:expression}) ? ${4:true} : ${5:false};",
+        "body": "${1:Object} ${2:variable} = (${3:expression}) ? ${4:true} : ${5:false};",
         "description": "Ternary operator"
-    },
-
-    "tryCatch": {
-        "prefix": "tryCatch",
-        "body": "try {\n\n} catch(Exception e){\n\n}",
-        "description": "Try/catch statement"
     },
 
     "variableList": {
         "prefix": "variableList",
-        "body": "List<${1:type}> ${2:listName} = new List<${1:type}>{\n};",
-        "description": "Creates a new list with variables"
+        "body": [
+            "List<${1:Object}> ${2:listName} = new List<${1:Object}>{",
+            "\t$0",
+            "};"
+        ],
+        "description": "New list with variables"
     },
 
     "variableMap": {
         "prefix": "variableMap",
-        "body": "Map<${1:keyType}, ${2:valueType}> ${3:mapName} = new Map<${1:keyType}, ${2:valueType}>{\n\t${4:key} => ${5:value}\n};",
-        "description": "Creates a new Map with variables"
-    },
-
-    "while": {
-        "prefix": "while",
-        "body": "while() {\n}",
-        "description": "While loop"
-    }
+        "body": [
+            "Map<${1:keyObject}, ${2:valueObject}> ${3:mapName} = new Map<${1:keyObject}, ${2:valueObject}>{",
+            "\t${4:key} => ${5:value}",
+            "};"
+        ],
+        "description": "New Map with variables"
+    }   
 }
