@@ -105,6 +105,14 @@
         "description": "New map based on SOQL"
     },
 
+    "soqlObject": {
+        "prefix": "soqlObject",
+        "body": [
+            "${1:Object} ${2:variableName} = [SELECT Id FROM ${1:Object} WHERE ${2:filter}];"
+        ],
+        "description": "Object based on SOQL"
+    },
+
     "ternary":{
         "prefix": "ternary",
         "body": "${1:Object} ${2:variable} = (${3:expression}) ? ${4:true} : ${5:false};",
@@ -129,5 +137,18 @@
             "};"
         ],
         "description": "New Map with variables"
-    }   
+    },
+    
+    "wrapper": {
+        "prefix": "wrapper",
+        "body":[
+            "public class ${1:className} {",
+            "\tpublic ${2:Object} ${3:objectName} {get; set;}",
+            "\n\tpublic ${1:className}(${2:Object} ${4:variableName}) {",
+            "\t\t${3:objectName} = ${4:variableName};",
+            "\t}",
+            "}"
+        ],
+        "description": "New wrapper class"
+    }
 }
